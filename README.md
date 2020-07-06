@@ -35,7 +35,3 @@ plugin插件：
   用于打包时的额外功能
   html-webpack-plugin
   clean-webpack-plugin
-
-
-
-测试测试
