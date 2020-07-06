@@ -35,3 +35,23 @@ plugin插件：
   用于打包时的额外功能
   html-webpack-plugin
   clean-webpack-plugin
+
+loaders用于编译打包文件模块，将其转换成浏览器能够识别的代码
+ css->用到style-loader css-loader
+ sass -> 用到style-loader css-loader sass-loader node-sass
+ js -> babel-loader @babel/core
+
+本地服务：
+  webpack-dev-server
+  open
+  contentBase
+  hot
+
+热更新：
+ devServer.hot = true
+ 使用两个webpack的内置插件
+
+生产环境与开发环境的区分:
+ cross-env 使用这个包来指定
+ process.env.NODE_ENV 环境变量
+
