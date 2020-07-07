@@ -62,4 +62,7 @@ ESLint配置
 使用React:
  cnpm install react react-dom -S
  cnpm @babel/preset-react 配置文件
- 
+ 添加一个配置文件: .babelrc.json
+
+使用较新js语法：
+ cnpm install @babel/preset-env
