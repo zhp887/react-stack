@@ -2,9 +2,7 @@ var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
-
 // process.env.xxx = 'development'
-
 console.log('----------',process.env.NODE_ENV)
 
 var env = process.env.NODE_ENV
@@ -20,13 +18,12 @@ var config = {
         filename: '[name].[hash].js',
         path:path.resolve(__dirname,'./dist')
     },
-    
     //plugin
     plugins:[
         //把打包成功后的.js 文件自动插入到一个html模板中
         new HtmlWebpackPlugin({
             title: "2001",
-            template:path.resolve(__dirname,'./public/index.html')   // 只能用绝对路径
+            template:path.resolve(__dirname,'./public/index.html')// 只能用绝对路径
         }),
         //用于自动删除dist目录
         new CleanWebpackPlugin(),
@@ -42,7 +39,8 @@ var config = {
     resolve:{
         alias:{
             '@':path.resolve(__dirname,'./src')
-        }
+        },
+        extensions: [".js", ".json"]
     }
 }
 // 开发环境
@@ -57,6 +55,15 @@ if (env == 'development') {
         contentBase: path.resolve(__dirname,'./public'),
         open:true,
         hot:true, //开启热更新
-    }  
+        overlay:{
+            errors:true
+        }
+    }
+    config.module.rules.push({
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['eslint-loader'],
+        enforce:'pre'//在babel编译之前
+    }) 
 }
 module.exports = config
