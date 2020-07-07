@@ -55,3 +55,11 @@ loaders用于编译打包文件模块，将其转换成浏览器能够识别的�
  cross-env 使用这个包来指定
  process.env.NODE_ENV 环境变量
 
+ESLint配置
+ cnpm install eslint eslint-loader -D
+ 手动创建.eslintrc.json配置文件
+
+使用React:
+ cnpm install react react-dom -S
+ cnpm @babel/preset-react 配置文件
+ 
