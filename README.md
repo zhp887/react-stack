@@ -66,3 +66,42 @@ ESLint配置
 
 使用较新js语法：
  cnpm install @babel/preset-env
+
+## React
+
+1、jsx理解
+  jsx = javascript xml 语法糖
+  jsx 变量、对象
+  jsx 不是强制的，但jsx让代码更具有可读性
+  jsx 可以嵌套
+  jsx 中可以使用表达式，使用方法用 单大括号进行包裹
+
+2、组件定义
+  react中有多少种创建组件的方法？
+
+  ES5组件 React.createElement()
+  类组件 class User extends React.Component{}
+  无状态组件 function User(props){}
+  高阶组件 function Hoc(Child){}
+  Hocks 组件
+
+3、props
+  props是父子之间的通信纽带
+  props是只读的
+
+4、state
+  当state发生变化时，视图自动变化（单向数据流）
+  this.setState({},[callback])异步的
+
+5、事件绑定
+  事件中怎么拿到对象？ （阻止冒泡、 阻止默认事件、键盘事件）
+  事件处理器中的this指向问题
+  如何进行事件传参？
+  
+  ```
+  {/* 注释：常用下面两种方式进行事件绑定 */}
+  <button onClick={this.click1.bind(this, '一')}>点击事件1</button>
+  <button onClick={(e)=>this.click2('二', e)}>点击事件2</button>
+  {/* 注释：一般不建议这么写 */}
+  <button onClick={this.click3}>点击事件3</button>
+  ```

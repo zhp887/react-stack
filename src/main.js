@@ -10,7 +10,7 @@ import React from 'react'
 import ReactDOM from "react-dom"
 
 import App from './App'
-console.log('我是入口文件')
+// console.log('我是入口文件')
 
 
 // document.getElementById('main').style.color = "red"
