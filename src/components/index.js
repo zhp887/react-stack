@@ -5,6 +5,7 @@ import Child2 from './child2'
 import Model1 from './model1'
 import Model2 from './model2'
 import Child3 from './child3'
+import Child4 from './child4'
 export {
     Child,
     Ref,
@@ -12,5 +13,6 @@ export {
     Child2,
     Model1,
     Model2,
-    Child3
+    Child3,
+    Child4
 }

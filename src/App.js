@@ -1,26 +1,20 @@
 import React from 'react'
-
-// import Home from './views/home/'
-// import User from './views/user/'
-import { 
-    Home, 
-    User, 
-    Condition, 
-    List, 
-    Form, 
-    State, 
-    Combine, 
-    Life, 
-    Fragment, 
-    Testctx,
-    Testhoc,
-    Hook,
-    Testtype
-} from './views'
-import { Header,Section,Footer,Todolist } from './views/ToDoList/'
+import '@/assets/css/style.scss'
 import { theme, ThemeContext } from './utils/theme'
-// import { Todor } from './views'
 
+import {
+    HashRouter,
+    BrowserRouter,
+    NavLink,
+    Route,
+    Switch,
+    Redirect
+} from 'react-router-dom'
+import { Header, Section, Footer, Todolist } from './views/ToDoList/'
+import routes from '@/views'
+console.log(routes)
+import { Provider } from 'mobx-react'
+import store from '@/store'
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -30,45 +24,81 @@ class App extends React.Component {
             curTheme: theme.dark
         }
     }
-    changeTheme(){
+    changeTheme() {
         var i = Math.random()
         if (i < 0.3) {
-            this.setState({curTheme:theme.dark})
+            this.setState({ curTheme: theme.dark })
         } else if (i < 0.6 && i > 0.3) {
-            this.setState({curTheme:theme.light})
+            this.setState({ curTheme: theme.light })
         } else {
-            this.setState({curTheme:theme.pink})
+            this.setState({ curTheme: theme.pink })
         }
+    }
+    //生成侧边导航
+    createNavLink() {
+        return routes.map(ele => (
+            <div key={ele.id} className='link'>
+                <NavLink exact activeClassName='on' to={ele.path}>{ele.text}</NavLink>
+            </div>
+        ))
+    }
+    //生成视图容器
+    //exact完全匹配
+    //Route和Switch是直接父子关系，中间不能其它的元素包裹
+    createRoute() {
+        var res = []
+        let { curTheme } = this.state
+        routes.map(ele => {
+            res.push(
+                <Route
+                    key={ele.id}
+                    exact
+                    path={ele.path}
+                    component={ele.component}>
+                </Route>
+            )
+            if (ele.children) {
+                ele.children.map(ele => {
+                    res.push(
+                        <Route
+                            key={ele.id}
+                            exact
+                            path={ele.path}
+                            component={ele.component}>
+                        </Route>
+                    )
+                })
+            }
+        })
+        return res
     }
     render() {
         let { curTheme } = this.state
         return (
-            <div>
-                {/* <h1>hello React</h1>
-                <h2>{this.state.msg}</h2>
-               <User></User> */}
-               {/* <Header></Header>
-               <Section></Section>
-               <Footer></Footer> */}
-               {/* <Condition></Condition>
-               <List></List> */}
-               {/* <Form></Form> */}
-               {/* <State></State> */}
-               {/* <Todolist></Todolist> */}
-               {/* <Combine></Combine> */}
-               {/* <Life></Life> */}
-               {/* <Fragment></Fragment> */}
-               {/* <div>
-                   上下文是给TestCtx 这个组件来使用
-                   <ThemeContext.Provider value={curTheme}>
-                       <Testctx></Testctx>
-                       <button onClick={this.changeTheme.bind(this)}>换肤</button>
-                   </ThemeContext.Provider>
-               </div> */}
-               {/* <Testhoc></Testhoc> */}
-               {/* <Hook></Hook> */}
-               <Testtype></Testtype>
-            </div>
+            <HashRouter>
+                <Provider store={store}>
+                    <ThemeContext.Provider value={curTheme}>
+                        <div className='app'>
+                            {/* 上下文是给TestCtx 这个组件来使用 */}
+                            {/* <ThemeContext.Provider value={curTheme}>
+                            <button onClick={this.changeTheme.bind(this)}>换肤</button>
+                            <TestCtx></TestCtx>
+                            </ThemeContext.Provider> */}
+                            <div className='left'>
+                                {this.createNavLink()}
+                            </div>
+                            <div className='right'>
+                                {/* 保证匹配关系，只有一个成立，避免一对多的匹配关系 */}
+                                <Switch>
+                                    {/* 一组匹配规则，从上到下进行匹配 */}
+                                    {this.createRoute()}
+                                    <Redirect from='/*' to='/'></Redirect>
+                                </Switch>
+                            </div>
+                        </div>
+                    </ThemeContext.Provider>
+                </Provider>
+            </HashRouter>
         )
     }
 }

@@ -41,7 +41,9 @@ var config = {
             '@': path.resolve(__dirname, './src')
         },
         extensions: [".js", ".json"]
-    }
+    },
+    devtool: 'inline-source-map', // 加上对应的配置
+
 }
 // 开发环境
 if (env == 'development') {
@@ -73,5 +75,6 @@ if (env == 'development') {
         use: ['eslint-loader'],
         enforce: 'pre'//在babel编译之前
     })
+
 }
 module.exports = config

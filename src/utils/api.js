@@ -8,6 +8,10 @@ export function addTodo(params) {
   })
 }
 
-export default {
-    addTodo,
+export function fetchCnodeList(params){
+  return fetch({
+    url:'/topics',
+    method:'get',
+    params
+  })
 }

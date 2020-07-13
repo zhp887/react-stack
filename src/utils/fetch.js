@@ -2,8 +2,8 @@ import axios from 'axios'
 
 // let baseURL_dev = 'http://localhost:8081' // 解决跨域问题
 
-let baseURL_dev = 'http://localhost:8888' // 解决跨域问题
 // let baseURL_dev = 'http://localhost:8888' // 解决跨域问题
+let baseURL_dev = 'https://cnodejs.org/api/v1' // 解决跨域问题
 
 // let baseURL_pro = ''  // 公司域名
 // let baseURL_test = '' // 内网地址
@@ -31,11 +31,11 @@ fetch.interceptors.response.use((response) => {
   // 请求成功
   // console.log('响应拦截', response)
   // 数据过滤，根据后端标识字符来进行数据
-  if (response.data && response.data.err == 0) {
+  if (response.data && response.data.success) {
     return response.data.data
   } else {
     console.log('网络异步，请稍后再试')
-    console.log(response.data)
+    // console.log(response.data)
   }
 }, (error) => {
   // 请求失败

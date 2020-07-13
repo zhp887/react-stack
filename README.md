@@ -105,3 +105,97 @@ ESLint配置
   {/* 注释：一般不建议这么写 */}
   <button onClick={this.click3}>点击事件3</button>
   ```
+##路由
+1、withRouter的使用
+  withRouter是一个高阶函数，它的作用是让哪些没有被Route包裹的组件拥有this.props.history等API。
+  import{withRouter} from 'react-router-dom'
+  export default withRouter(组件名)
+2、代码分割(组件按需加载)
+  cnpm install babel-eslint @babel/plugin-syntax-dynamic-import -D
+  cnpm install @loadable/component -S
+
+  babel-eslint，它的作用是把较更高版本的ES6语法转化成eslint可以检测的代码。
+
+  ```
+    # .babelrc.json
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
+  ```
+  ```
+   # .eslintrc.json
+  "parser": "babel-eslint"
+  ```
+
+使用动态加载：
+  ```
+  import loadable from '@loadable/component'
+  const Home = loadable(()=>import('./home/index.js'))
+  ```
+##状态工具：可预测的数据管理
+
+flux
+mobx -- 写法非常灵活，非常适合小型项目
+mobx-react
+redux -- 写法相对难以理解，中大型项目
+react-redux
+vuex
+
+##mobx的使用
+1、安装mobx 和 mobx-react
+  ```
+  cnpm install mobx -S
+  cnpm install mobx-react -S
+  ```
+2、安装支持装饰器语法的babel插件并配置文件
+  ```
+  # .babelrc.json
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }]
+  ]
+  ```
+3、创建store根实例
+  ```
+  # /store/index.js
+  class Store {
+    constructor() {
+      this.TodoStroe = new TodoStroe()
+    }
+  }
+  export default new Store()
+  ```
+4、创建子store
+  ```
+  import { observable, action, computed } from 'mobx'
+  class TodoStroe {
+    @observable count = 0
+    @observable list = []
+    @action addCount() {
+      this.count++
+    }
+    @action changeList(payload) {
+      this.list.push(payload)
+    }
+    @computed get count2() {
+      return this.count*100
+    }
+  }
+  ```
+
+5、使用store
+  ```
+  # App.js
+  import store from '@/store'
+  import { Provider } from 'mobx-react'
+
+  <Provider store={store}></Provider>
+  ```   
+  ```
+  # Home.js
+  import { observer, inject } from 'mobx-react'
+
+  @inject('store')
+  @observer
+  class Home extends React.Component {
+    # 在 this.props.store.TodoStroe 中即可使用状态数据和方法
+  }
+  ```
